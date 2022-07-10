@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node index.js",
-    "lint": "eslint --fix --ext .js,.jsx"
+    "lint": "eslint --fix ."
   },
   "keywords": [],
   "author": "Mateo2131",
