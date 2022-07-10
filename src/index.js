@@ -1,16 +1,20 @@
 console.clear()
 
-import express, { Router } from 'express'
-import productsRouter from './routes/product.js'
+import 'dotenv/config'
+import cors from 'cors'
+import express from 'express'
+import main from './db/mongo.js'
 
-const PORT = 3000
+// Routes
+import productRouter from './routes/product.router.js'
+
+const PORT = 3040
 const app = express()
-const router = Router()
+main()
 
 app.use(express.json())
-
-app.use('/api/v1', router)
-router.use('/products', productsRouter)
+app.use(cors())
+app.use('/products', productRouter)
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node index.js",
+    "start": "node src/index.js",
     "lint": "eslint --fix ."
   },
   "keywords": [],
@@ -20,7 +20,9 @@
     "prettier": "2.7.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "4.18.1",
-    "faker": "^5.5.3"
+    "mongoose": "6.4.4"
   }
 }
