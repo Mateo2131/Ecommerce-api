@@ -30,16 +30,16 @@ categoriesRouter.post('/', (req, res) => {
   return
 })
 
-categoriesRouter.delete('/:id', (req, res) => {
-  const id = req.params.id
-
+categoriesRouter.delete('/', (req, res) => {
+  const { id } = req.query
+  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: 'Invalid id' })
   }
   else {
     Category.findByIdAndRemove(id)
       .then(() => {
-        return res.status(204).json({ message: 'Category deleted' })
+        return res.status(200).json({ message: 'Category deleted' })
       })
       .catch(err => {
         return res.status(400).json({ error: err.message })

@@ -6,9 +6,10 @@ const productSchema = new Schema({
   price: Number,
   description: String,
   image: String,
-  category: {
-    id: Number,
-    name: String,
+  category: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   }
 })
 

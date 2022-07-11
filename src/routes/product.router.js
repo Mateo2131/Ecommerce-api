@@ -1,46 +1,65 @@
+import mongoose from 'mongoose'
 import { Router } from 'express'
 import Product from '../models/product.js'
 
 const productsRouter = Router()
 
 productsRouter.get('/', (req, res) => {
-  return res.status(200).json()
-})
-
-productsRouter.get('/:id', (req, res) => {
-  res.status(200).json()
+  Product.find()
+    .then(products => {
+      return res.status(200).json(products)
+    })
+    .catch(err => {
+      return res.status(400).json({ error: err.message })
+    })
 })
 
 productsRouter.post('/', (req, res) => {
-  const { name, price, description, image } = req.body
+  const body = req.body
 
-  if (!name || !price || !description || !image) {
-    return res.status(400).json({
-      error: 'Missing required fields',
+  const product = new Product(body)
+
+  product.save()
+    .then(() => {
+      return res.status(201).json(product)
     })
-  }
-  else {
-    const product = new Product({ name, price, description, image })
+    .catch(err => {
+      return res.status(400).json({ error: err.message })
+    })
 
-    product.save()
-      .then(() => {
-        return res.status(201).json(product)
-      })
-      .catch(error => {
-        return res.status(400).json({
-          error: error.message,
-        })
-      })
-  }
   return
 })
 
-productsRouter.patch('/:id', (req, res) => {
-  return res.json()
+productsRouter.delete('/', (req, res) => {
+  const { id } = req.query
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid id' })
+  }
+  else {
+    Product.findByIdAndRemove(id)
+      .then(() => {
+        return res.status(200).json({ message: 'Product deleted' })
+      })
+      .catch(err => {
+        return res.status(400).json({ error: err.message })
+      })
+  }
+
+  return
 })
 
-productsRouter.delete('/:id', (req, res) => {
-  return res.json()
+productsRouter.patch('/', (req, res) => {
+  const { id } = req.query
+  const body = req.body
+
+  Product.findByIdAndUpdate(id,body)
+    .then(() => {
+      return res.status(200).json({ message: 'Product updated' })
+    })
+    .catch(err => {
+      return res.status(400).json({ error: err.message })
+    })
 })
 
 export default productsRouter
