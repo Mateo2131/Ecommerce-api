@@ -6,6 +6,10 @@ const productSchema = new Schema({
   price: Number,
   description: String,
   image: String,
+  category: {
+    id: Number,
+    name: String,
+  }
 })
 
 const Product = model('product', productSchema)
