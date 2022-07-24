@@ -6,7 +6,7 @@ import express from 'express'
 import main from './db/mongo.js'
 
 // Routes
-import apiRouter from './routes/api.router.js'
+import apiRouter from './controllers/api.js'
 
 const PORT = process.env.PORT || 3040
 const app = express()
